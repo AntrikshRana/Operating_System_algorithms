@@ -23,7 +23,7 @@ int main(){
         for(int i=0; i<n; i++) { visited[i] = 0; }
 
         int gantt[1000];
-        int ganttCount = 0;
+        int ganttCount = 0, contextSwitches = 0;
 
         while(completed < n){
                 for(int i=0; i<n; i++){
@@ -49,6 +49,7 @@ int main(){
                 }
 
                 int i = queue[front++];
+                if(ganttCount > 0 && gantt[ganttCount - 1] != i) { contextSwitches++; }
                 gantt[ganttCount++] = i;
 
                 if(rt[i] > tq){
@@ -80,5 +81,6 @@ int main(){
         for(int i=0; i<ganttCount; i++) { printf("P%d ",gantt[i]+1); }
         printf("\nAverage waiting time : %.2f\n",(float)totalWaitingTime/n);
         printf("Average turn around time : %.2f\n",(float)totalTurnAroundTime/n);
+        printf("Context switches : %d\n",contextSwitches);
         return 0;
 }

@@ -5,7 +5,7 @@ int main(){
 	scanf("%d",&n);
 
 	int pid[n], at[n], bt[n], ct[n], tat[n], wt[n];
-	int totalWaitingTime=0,totalTurnAroundTime=0;
+	int totalWaitingTime=0,totalTurnAroundTime=0,contextSwitches=0;
 
 	for(int i=0; i<n; i++){
 		pid[i] = i+1;
@@ -27,6 +27,7 @@ int main(){
 		if(ct[i-1] < at[i]) { ct[i] = at[i] + bt[i]; }
 		else { ct[i] = ct[i-1] + bt[i]; }
 	}
+	if(n > 1) { contextSwitches = n - 1; }
 	for(int i=0; i<n; i++){
 		tat[i] = ct[i] - at[i]; totalTurnAroundTime+=tat[i];
 		wt[i] = tat[i] - bt[i]; totalWaitingTime+=wt[i];
@@ -34,4 +35,5 @@ int main(){
 	printf("\nGantt Chart : "); for(int i=0; i<n; i++) { printf("P%d ",pid[i]); }
 	printf("\nAverage waiting time : %.2f\n",(float)totalWaitingTime/n);
 	printf("Average turn aroung time : %.2f\n",(float)totalTurnAroundTime/n);
+	printf("Context switches : %d\n",contextSwitches);
 }
